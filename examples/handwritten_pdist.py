@@ -16,12 +16,12 @@ data = digits.images.reshape((n_samples, -1))
 def run(split):
   n_split = int(split*n_samples)
 
-  print ""
-  print "="*100
-  print ""
+  print("")
+  print("="*100)
+  print("")
 
-  print "Split: %3.2f" % split
-  print "Size: %d, Classifying Size: %d, Testing Size: %d" % (n_samples, n_split, n_samples-n_split)
+  print("Split: %3.2f" % split)
+  print("Size: %d, Classifying Size: %d, Testing Size: %d" % (n_samples, n_split, n_samples-n_split))
 
   rand = numpy.random.permutation(n_samples)
 
@@ -33,7 +33,7 @@ def run(split):
 
   label_train, label_test = random_label[:n_split], random_label[n_split:]
 
-  print "-"*20, "OPF", "-"*20
+  print("-"*20, "OPF", "-"*20)
   def opf():
 
     # OPF only supports 32 bits labels at the moment
@@ -45,14 +45,14 @@ def run(split):
     t = time.time()
     O.fit(dist_train, label_train_32, precomputed_distance=True)
 #    O.fit(dist_train, label_train_32, precomputed_distance=True, learning="agglomerative", split=0.8)
-    print "OPF: time elapsed in fitting: %f secs" % (time.time()-t)
+    print("OPF: time elapsed in fitting: %f secs" % (time.time()-t))
 
     t = time.time()
     predicted = O.predict(dist_test)
-    print "OPF: time elapsed in predicting: %f secs" % (time.time()-t)
+    print("OPF: time elapsed in predicting: %f secs" % (time.time()-t))
 
-    print "Classification report for OPF:\n%s\n" % (metrics.classification_report(label_test_32, predicted))
-    print "Confusion matrix:\n%s" % metrics.confusion_matrix(label_test_32, predicted)
+    print("Classification report for OPF:\n%s\n" % (metrics.classification_report(label_test_32, predicted)))
+    print("Confusion matrix:\n%s" % metrics.confusion_matrix(label_test_32, predicted))
 
   opf()
 

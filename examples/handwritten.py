@@ -15,12 +15,12 @@ data = digits.images.reshape((n_samples, -1))
 def run(split):
   n_split = int(split*n_samples)
 
-  print ""
-  print "="*100
-  print ""
+  print("")
+  print("="*100)
+  print("")
 
-  print "Split: %3.2f" % split
-  print "Size: %d, Classifying Size: %d, Testing Size: %d" % (n_samples, n_split, n_samples-n_split)
+  print("Split: %3.2f" % split)
+  print("Size: %d, Classifying Size: %d, Testing Size: %d" % (n_samples, n_split, n_samples-n_split))
 
   rand = numpy.random.permutation(n_samples)
 
@@ -30,7 +30,7 @@ def run(split):
   data_train,  data_test  = random_data [:n_split], random_data [n_split:]
   label_train, label_test = random_label[:n_split], random_label[n_split:]
 
-  print "-"*20, "OPF", "-"*20
+  print("-"*20, "OPF", "-"*20)
   def opf():
 
     # OPF only supports 32 bits labels at the moment
@@ -42,32 +42,32 @@ def run(split):
     t = time.time()
     O.fit(data_train, label_train_32)
 #    O.fit(data_train_32, label_train_32, learning="agglomerative", split=0.8)
-    print "OPF: time elapsed in fitting: %f secs" % (time.time()-t)
+    print("OPF: time elapsed in fitting: %f secs" % (time.time()-t))
 
     t = time.time()
     predicted = O.predict(data_test)
-    print "OPF: time elapsed in predicting: %f secs" % (time.time()-t)
+    print("OPF: time elapsed in predicting: %f secs" % (time.time()-t))
 
-    print "Classification report for OPF:\n%s\n" % (metrics.classification_report(label_test_32, predicted))
-    print "Confusion matrix:\n%s" % metrics.confusion_matrix(label_test_32, predicted)
+    print("Classification report for OPF:\n%s\n" % (metrics.classification_report(label_test_32, predicted)))
+    print("Confusion matrix:\n%s" % metrics.confusion_matrix(label_test_32, predicted))
 
   opf()
 
-  print "-"*20, "SVM", "-"*20
+  print("-"*20, "SVM", "-"*20)
   def _svm():
 
     clf = svm.SVC()
 
     t = time.time()
     clf.fit(data_train, label_train)
-    print "SVM: time elapsed in fitting: %f secs" % (time.time()-t)
+    print("SVM: time elapsed in fitting: %f secs" % (time.time()-t))
 
     t = time.time()
     predicted = clf.predict(data_test)
-    print "SVM: time elapsed in predicting: %f secs" % (time.time()-t)
+    print("SVM: time elapsed in predicting: %f secs" % (time.time()-t))
 
-    print "Classification report for SVM:\n%s\n" % (metrics.classification_report(label_test, predicted))
-    print "Confusion matrix:\n%s" % metrics.confusion_matrix(label_test, predicted)
+    print("Classification report for SVM:\n%s\n" % (metrics.classification_report(label_test, predicted)))
+    print("Confusion matrix:\n%s" % metrics.confusion_matrix(label_test, predicted))
 
   _svm()
 
